@@ -1,0 +1,34 @@
+<!-- your_app/templates/your_app/cook_list.html -->
+{% extends "layouts/base-presentation.html" %}
+
+{% block content %}
+  <div class="container mt-5 mb-5 ">
+    <h2 class="mb-4" style="margin-top: 100px;">List of Cooks</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for cook in cook_list %}
+        <div class="col py-2">
+          <div class="card h-100">
+            <div class="card-body">
+              <a href="#">
+                <h5 class="card-title">{{ cook.username }}</h5>
+                <p class="card-text">Years of Experience: {{ cook.years_of_experience }}</p>
+                <h6 class="card-subtitle mb-2 text-muted">Dishes Participated:</h6>
+                <ul>
+                  {% for dish in cook.dishes.all|slice:":5" %}
+                    <li>{{ dish.name }}</li>
+                  {% endfor %}
+                  {% if cook.dishes.count > 5 %}
+                    <li>...</li>
+                  {% endif %}
+                  {% if not cook.dishes.all %}
+                    <li>This cook doesn't participate in any dishes yet.</li>
+                  {% endif %}
+                </ul>
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock content %}

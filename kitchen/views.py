@@ -23,7 +23,7 @@ class DishTypeListView(generic.ListView):
     paginate_by = 6
 
 
-def dish_type_detail_view(request, pk):
+def dish_type_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
     dish_type = get_object_or_404(DishType, pk=pk)
     dishes = dish_type.dish_set.all()
 
@@ -37,4 +37,13 @@ def dish_type_detail_view(request, pk):
 
 class DishListView(generic.ListView):
     model = Dish
+    paginate_by = 3
+
+
+class DishDetailView(generic.DetailView):
+    model = Dish
+
+
+class CookListView(generic.ListView):
+    model = get_user_model()
     paginate_by = 3
