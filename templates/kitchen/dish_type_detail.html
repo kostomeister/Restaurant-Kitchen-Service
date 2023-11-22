@@ -5,8 +5,14 @@
     <div class="row">
       <div class="col-md-8 offset-md-2">
         <div class="card" style="margin-top: 100px;">
-          <div class="card-header">
-            <h2 class="text-center">About our {{ dish_type.name }}</h2>
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h2 class="text-center">Our {{ dish_type.name }}</h2>
+            <div class="d-flex">
+{#              <a href="{% url 'kitchen:dish-type-update' pk=dish_type.id %}" class="btn btn-primary me-2">Update</a>#}
+              <a href="#" class="btn btn-primary me-2">Update</a>
+{#              <a href="{% url 'kitchen:dish-type-delete' pk=dish_type.id %}" class="btn btn-danger">Delete</a>#}
+              <a href="#" class="btn btn-danger">Delete</a>
+            </div>
           </div>
           <div class="card-body">
             <ul class="list-group">
