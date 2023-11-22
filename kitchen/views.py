@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
+from django.views import generic
 
 from kitchen.models import Dish, DishType
 
@@ -15,3 +16,8 @@ def index(request: HttpRequest) -> HttpResponse:
         "count_dish_types": count_dish_types
     }
     return render(request, "kitchen/index.html", context)
+
+
+class DishTypeListView(generic.ListView):
+    model = DishType
+    paginate_by = 6
