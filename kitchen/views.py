@@ -44,6 +44,13 @@ class DishTypeCreateView(generic.CreateView):
     success_url = reverse_lazy("kitchen:dish-types-list")
 
 
+class DishTypeUpdateView(generic.UpdateView):
+    model = DishType
+    form_class = DishTypeCreateForm
+    template_name = "kitchen/dish_type_form.html"
+    success_url = reverse_lazy("kitchen:dish-types-list")
+
+
 class DishListView(generic.ListView):
     model = Dish
     paginate_by = 3
