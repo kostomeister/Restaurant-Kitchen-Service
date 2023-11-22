@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 
-from kitchen.forms import DishTypeCreateForm
+from kitchen.forms import DishTypeCreateForm, DishForm
 from kitchen.models import Dish, DishType
 
 
@@ -47,8 +47,8 @@ class DishTypeCreateView(generic.CreateView):
 class DishTypeUpdateView(generic.UpdateView):
     model = DishType
     form_class = DishTypeCreateForm
-    template_name = "kitchen/dish_type_form.html"
-    success_url = reverse_lazy("kitchen:dish-types-list")
+    template_name = "kitchen/dish_form.html"
+    success_url = reverse_lazy("kitchen:dish-list")
 
 
 class DishTypeDeleteView(generic.DeleteView):
@@ -63,6 +63,13 @@ class DishListView(generic.ListView):
 
 class DishDetailView(generic.DetailView):
     model = Dish
+
+
+class DishCreateView(generic.CreateView):
+    model = DishType
+    form_class = DishForm
+    template_name = "kitchen/dish_type_form.html"
+    success_url = reverse_lazy("kitchen:dish-types-list")
 
 
 class CookListView(generic.ListView):
