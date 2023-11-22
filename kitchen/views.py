@@ -35,3 +35,6 @@ def dish_type_detail_view(request, pk):
     return render(request, 'kitchen/dish_type_detail.html', context)
 
 
+class DishListView(generic.ListView):
+    model = Dish
+    paginate_by = 3

@@ -11,7 +11,7 @@
             <div class="col-md-4 mb-4">
               <div class="card">
                 <div class="card-body">
-                  <a href="{% url 'kitchen:dish-detail' pk=dish_type.id %}">
+                  <a href="{% url 'kitchen:dish-type-detail' pk=dish_type.id %}">
                     <h4 class="card-title">{{ dish_type.name }}</h4>
                     <ul>
                       {% for dish in dish_type.dish_set.all %}
