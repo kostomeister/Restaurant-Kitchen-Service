@@ -5,11 +5,15 @@
     <div class="row">
       <div class="col-md-8 offset-md-2">
         <div class="card" style="margin-top: 100px;">
-          <div class="card-header">
-            <h2 class="text-center">About {{ dish.name }}</h2>
-          </div>
-          <div class="card-body">
+          <div class="card-header d-flex justify-content-between align-items-center">
+              <h2 class="text-center">About {{ dish.name }}</h2>
+              <div class="d-flex">
+                <a href="{% url 'kitchen:dish-update' pk=dish.id %}" class="btn btn-primary" style="margin-right: 0.5rem;">Update</a>
+                <a href="#" class="btn btn-danger">Delete</a>
+              </div>
+            </div>
 
+          <div class="card-body">
             <p>{{ dish.description }}</p>
             <p><strong>Price:</strong> ${{ dish.price }}</p>
             <p>Type: {{ dish.dish_type.name }}</p>
@@ -17,7 +21,7 @@
               <p><strong>Cooks:</strong></p>
               <ul>
                 {% for cook in dish.cooks.all %}
-                  <li><a href="#">
+                  <li><a href="{% url 'kitchen:cooks-detail' pk=cook.id %}">
                     {{ cook.first_name }} {{ cook.last_name }}
                   </a></li>
                 {% endfor %}
