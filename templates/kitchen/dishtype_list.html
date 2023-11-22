@@ -1,0 +1,31 @@
+{% extends "layouts/base-presentation.html" %}
+
+{% block content %}
+  <div class="container mt-5 mb-5">
+    <div class="row" style="margin-top: 100px;">
+      <div class="col-12">
+        <h2>List of Dish Types</h2>
+        <div class="row">
+          {% for dish_type in dishtype_list %}
+
+            <div class="col-md-4 mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <a href="#">
+                    <h4 class="card-title">{{ dish_type.name }}</h4>
+                    <ul>
+                      {% for dish in dish_type.dish_set.all %}
+                          <li>{{ dish.name }}</li>
+                      {% endfor %}
+                    </ul>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
