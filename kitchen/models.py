@@ -6,6 +6,9 @@ from django.db import models
 class DishType(models.Model):
     name = models.CharField(max_length=64)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class Cook(AbstractUser):
     years_of_experience = models.IntegerField(default=0)
