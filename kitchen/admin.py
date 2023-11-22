@@ -11,8 +11,13 @@ class DishTypeAdmin(admin.ModelAdmin):
 
 @admin.register(Dish)
 class DishAdmin(admin.ModelAdmin):
-    search_fields = ("name",)
-    list_filter = ("dish_type",)
+    list_display = ('name', 'price', 'dish_type', 'cooks_list')
+    search_fields = ['name', 'dish_type__name']
+    list_filter = ['dish_type']
+
+    def cooks_list(self, obj):
+        return ", ".join([cook.username for cook in obj.cooks.all()])
+    cooks_list.short_description = "Cooks"
 
 
 @admin.register(Cook)
