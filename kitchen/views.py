@@ -1,8 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy
 from django.views import generic
 
+from kitchen.forms import DishTypeCreateForm
 from kitchen.models import Dish, DishType
 
 
@@ -33,6 +35,13 @@ def dish_type_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
     }
 
     return render(request, 'kitchen/dish_type_detail.html', context)
+
+
+class DishTypeCreateView(generic.CreateView):
+    model = DishType
+    form_class = DishTypeCreateForm
+    template_name = "kitchen/dish_type_form.html"
+    success_url = reverse_lazy("kitchen:dish-types-list")
 
 
 class DishListView(generic.ListView):
