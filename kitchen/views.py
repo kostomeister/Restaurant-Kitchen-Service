@@ -47,3 +47,7 @@ class DishDetailView(generic.DetailView):
 class CookListView(generic.ListView):
     model = get_user_model()
     paginate_by = 3
+
+
+class CookDetailView(generic.DetailView):
+    model = get_user_model()
