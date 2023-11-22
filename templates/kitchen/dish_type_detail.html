@@ -1,0 +1,22 @@
+{% extends "layouts/base-presentation.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="card" style="margin-top: 100px;">
+          <div class="card-header">
+            <h2 class="text-center">About our {{ dish_type.name }}</h2>
+          </div>
+          <div class="card-body">
+            <ul class="list-group">
+              {% for dish in dishes %}
+                <li class="list-group-item">{{ dish.name }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

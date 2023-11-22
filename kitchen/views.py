@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import generic
 
 from kitchen.models import Dish, DishType
@@ -21,3 +21,17 @@ def index(request: HttpRequest) -> HttpResponse:
 class DishTypeListView(generic.ListView):
     model = DishType
     paginate_by = 6
+
+
+def dish_type_detail_view(request, pk):
+    dish_type = get_object_or_404(DishType, pk=pk)
+    dishes = dish_type.dish_set.all()
+
+    context = {
+        'dish_type': dish_type,
+        'dishes': dishes,
+    }
+
+    return render(request, 'kitchen/dish_type_detail.html', context)
+
+
