@@ -9,8 +9,16 @@ from django.utils.decorators import method_decorator
 
 from .mixins.is_superuser import SuperUserCheckMixin
 
-from kitchen.forms import DishTypeForm, DishForm, DishTypeSearchForm, DishSearchForm, CookSearchForm, RegistrationForm, \
-    CookForm, CookUpdateForm
+from kitchen.forms import (
+    DishTypeForm,
+    DishForm,
+    DishTypeSearchForm,
+    DishSearchForm,
+    CookSearchForm,
+    RegistrationForm,
+    CookForm,
+    CookUpdateForm
+)
 from kitchen.models import Dish, DishType
 
 
