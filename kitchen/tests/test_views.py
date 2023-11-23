@@ -88,8 +88,8 @@ class DishTypeDeleteViewTest(TestCase):
         self.url = reverse('kitchen:dish-type-delete', args=[self.dish_type.id])
 
     def test_dish_type_delete_view(self):
-        response = self.client.get(self.url, follow=True)
-        self.assertEqual(response.status_code, 200)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
 
 
 class DishListViewTest(TestCase):
@@ -113,7 +113,11 @@ class DishCreateViewTest(TestCase):
     def test_dish_create_view(self):
         self.client.force_login(self.user)
         initial_count = Dish.objects.count()
-        response = self.client.post(self.url, data={'name': 'Ramen', 'description': 'Delicious ramen', 'price': '10.99'})
+        response = self.client.post(self.url, data={
+            'name': 'Ramen',
+            'description': 'Delicious ramen',
+            'price': '10.99'
+        })
         self.assertEqual(response.status_code, 302)
         self.assertEqual(Dish.objects.count(), initial_count + 1)
 
@@ -155,8 +159,8 @@ class DishDeleteViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'kitchen/dish_confirm_delete.html')
         self.assertContains(response, 'Confirm Delete Dish')
-        response = self.client.post(self.url, follow=True)
-        self.assertEqual(response.status_code, 200)
+        response = self.client.post(self.url)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(Dish.objects.count(), initial_count - 1)
 
 
