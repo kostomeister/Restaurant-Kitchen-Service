@@ -6,6 +6,10 @@ from django.db import models
 class DishType(models.Model):
     name = models.CharField(max_length=64)
 
+    class Meta:
+        verbose_name = "dish type"
+        verbose_name_plural = "dish types"
+
     def __str__(self) -> str:
         return self.name
 
@@ -26,3 +30,7 @@ class Dish(models.Model):
     cooks = models.ManyToManyField(
         get_user_model(), related_name="dishes"
     )
+
+    class Meta:
+        verbose_name = "dish"
+        verbose_name_plural = "dishes"
