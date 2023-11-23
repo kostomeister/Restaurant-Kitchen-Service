@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from .models import DishType, Dish
 
 
-class DishTypeCreateForm(forms.ModelForm):
+class DishTypeForm(forms.ModelForm):
     class Meta:
         model = DishType
         fields = ['name']
@@ -19,3 +19,11 @@ class DishForm(forms.ModelForm):
     class Meta:
         model = Dish
         fields = "__all__"
+
+
+class DishTypeSearchForm(forms.Form):
+    dish_type = forms.CharField(
+        widget=forms.TextInput(attrs={"placeholder": "Search by Dish Type"}),
+        label="",
+        required=False
+    )
