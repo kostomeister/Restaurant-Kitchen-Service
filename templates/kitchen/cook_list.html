@@ -1,16 +1,24 @@
+
 <!-- your_app/templates/your_app/cook_list.html -->
 {% extends "layouts/base-presentation.html" %}
+{% load crispy_forms_filters %}
 
 {% block content %}
   <div class="container mt-5 mb-5 ">
     <h2 class="mb-4" style="margin-top: 100px;">List of Cooks</h2>
     <div class="row row-cols-1 row-cols-md-3 g-4">
+    <form action="" method="get" class="input-group">
+      {{ cook_search_form|crispy }}
+      <span class="input-group-btn">
+          <button type="submit" class="btn btn-default">Search</button>
+      </span>
+    </form>
       {% for cook in cook_list %}
         <div class="col py-2">
           <div class="card h-100">
             <div class="card-body">
-              <a href="#">
-                <h5 class="card-title">{{ cook.username }}</h5>
+              <a href="{% url 'kitchen:cooks-detail' pk=cook.id %}">
+                <h5 class="card-title">{{ cook.first_name }} {{ cook.last_name }}</h5>
                 <p class="card-text">Years of Experience: {{ cook.years_of_experience }}</p>
                 <h6 class="card-subtitle mb-2 text-muted">Dishes Participated:</h6>
                 <ul>
@@ -21,7 +29,7 @@
                     <li>...</li>
                   {% endif %}
                   {% if not cook.dishes.all %}
-                    <li>This cook doesn't participate in any dishes yet.</li>
+                    <li>This cook hasn't participate in any dishes yet.</li>
                   {% endif %}
                 </ul>
               </a>

@@ -1,10 +1,11 @@
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 
-from kitchen.forms import DishTypeForm, DishForm, DishTypeSearchForm, DishSearchForm
+from kitchen.forms import DishTypeForm, DishForm, DishTypeSearchForm, DishSearchForm, CookSearchForm
 from kitchen.models import Dish, DishType
 
 
@@ -118,6 +119,23 @@ class CookListView(generic.ListView):
     model = get_user_model()
     paginate_by = 3
     queryset = get_user_model().objects.filter(is_staff=True)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CookListView, self).get_context_data(**kwargs)
+        cook_name = self.request.GET.get("cook_name", "")
+        context["cook_search_form"] = CookSearchForm(
+            initial={"cook_name": cook_name}
+        )
+        return context
+
+    def get_queryset(self):
+        cook_name = self.request.GET.get("cook_name")
+        queryset = get_user_model().objects.all()
+        if cook_name:
+            queryset = queryset.filter(
+                Q(first_name__icontains=cook_name) | Q(last_name__icontains=cook_name) | Q(username__icontains=cook_name)
+            )
+        return queryset
 
 
 class CookDetailView(generic.DetailView):
