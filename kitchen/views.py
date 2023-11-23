@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 
-from kitchen.forms import DishTypeForm, DishForm, DishTypeSearchForm
+from kitchen.forms import DishTypeForm, DishForm, DishTypeSearchForm, DishSearchForm
 from kitchen.models import Dish, DishType
 
 
@@ -74,6 +74,21 @@ class DishTypeDeleteView(generic.DeleteView):
 class DishListView(generic.ListView):
     model = Dish
     paginate_by = 3
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(DishListView, self).get_context_data(**kwargs)
+        dish_name = self.request.GET.get("dish_name", "")
+        context["dish_name_search_form"] = DishSearchForm(
+            initial={"dish_name": dish_name}
+        )
+        return context
+
+    def get_queryset(self):
+        dish_name = self.request.GET.get("dish_name")
+        queryset = Dish.objects.all()
+        if dish_name:
+            queryset = queryset.filter(name__icontains=dish_name)
+        return queryset
 
 
 class DishDetailView(generic.DetailView):

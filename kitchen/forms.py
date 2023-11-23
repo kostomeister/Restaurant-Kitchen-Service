@@ -27,3 +27,11 @@ class DishTypeSearchForm(forms.Form):
         label="",
         required=False
     )
+
+
+class DishSearchForm(forms.Form):
+    dish_name = forms.CharField(
+        widget=forms.TextInput(attrs={"placeholder": "Search Dish by name"}),
+        label="",
+        required=False
+    )

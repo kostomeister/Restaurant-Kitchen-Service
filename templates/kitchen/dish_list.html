@@ -1,22 +1,32 @@
 {% extends "layouts/base-presentation.html" %}
+{% load crispy_forms_filters %}
 
 {% block content %}
   <div class="container mt-5 mb-5">
     <div class="row" style="margin-top: 100px;">
       <div class="col-12">
-        <h2>List of Dishes</h2>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h2>List of Dishes</h2>
+          {% if user.is_staff %}
+            <a href="{% url 'kitchen:dish-create' %}" class="btn btn-primary">Add New</a>
+          {% endif %}
+        </div>
         <div class="row">
-          {% for dish in dish_list %}
-
+        <form action="" method="get" class="input-group">
+          {{ dish_name_search_form|crispy }}
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-default">Search</button>
+          </span>
+        </form>
+          {% for dish in dish_list|slice:":5" %}
             <div class="col-md-4 mb-4">
               <div class="card">
-                <div class="card-body">
-{#                  <a href="{% url 'kitchen:dish-detail' pk=dish.id %}">#}
-                  <a href="#">
+                <div class="card-body" style="height: 300px;">
+                  <a href="{% url 'kitchen:dish-detail' pk=dish.id %}">
                     <h4 class="card-title">{{ dish.name }}</h4>
-                    <h6  class="text-muted">{{ dish.dish_type.name }}</h6>
-                    {% if dish.description|wordcount > 35 %}
-                      <p>{{ dish.description|truncatewords:35  }}</p>
+                    <h6 class="text-muted">{{ dish.dish_type.name }}</h6>
+                    {% if dish.description|wordcount > 20 %}
+                      <p style="max-height: 80px; overflow: hidden;">{{ dish.description|truncatewords:20 }}</p>
                     {% else %}
                       {{ dish.description }}
                     {% endif %}
@@ -26,6 +36,11 @@
               </div>
             </div>
           {% endfor %}
+          {% if dish_list|length > 5 %}
+            <div class="col-12 text-center mt-3">
+              <p>...</p>
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
