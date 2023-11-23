@@ -22,6 +22,17 @@ class DishForm(forms.ModelForm):
         fields = "__all__"
 
 
+class CookForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = get_user_model()
+        fields = UserCreationForm.Meta.fields + (
+            "first_name",
+            "last_name",
+            "years_of_experience",
+            "is_staff"
+        )
+
+
 class DishTypeSearchForm(forms.Form):
     dish_type = forms.CharField(
         widget=forms.TextInput(attrs={"placeholder": "Search by Dish Type"}),

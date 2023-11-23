@@ -7,8 +7,10 @@ from django.views import generic
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 
+from .mixins.is_superuser import SuperUserCheckMixin
 
-from kitchen.forms import DishTypeForm, DishForm, DishTypeSearchForm, DishSearchForm, CookSearchForm, RegistrationForm
+from kitchen.forms import DishTypeForm, DishForm, DishTypeSearchForm, DishSearchForm, CookSearchForm, RegistrationForm, \
+    CookForm
 from kitchen.models import Dish, DishType
 
 
@@ -152,6 +154,13 @@ class CookListView(generic.ListView):
 
 class CookDetailView(generic.DetailView):
     model = get_user_model()
+
+
+class CookCreateView(SuperUserCheckMixin, generic.CreateView):
+    model = get_user_model()
+    form_class = CookForm
+    template_name = "kitchen/cook_form.html"
+    success_url = reverse_lazy("kitchen:cooks-list")
 
 
 def register_view(request: HttpRequest) -> HttpResponse:
