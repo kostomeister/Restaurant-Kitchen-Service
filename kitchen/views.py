@@ -4,6 +4,9 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
+
 
 from kitchen.forms import DishTypeForm, DishForm, DishTypeSearchForm, DishSearchForm, CookSearchForm
 from kitchen.models import Dish, DishType
@@ -53,6 +56,7 @@ def dish_type_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
     return render(request, 'kitchen/dish_type_detail.html', context)
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class DishTypeCreateView(generic.CreateView):
     model = DishType
     form_class = DishTypeForm
@@ -60,6 +64,7 @@ class DishTypeCreateView(generic.CreateView):
     success_url = reverse_lazy("kitchen:dish-types-list")
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class DishTypeUpdateView(generic.UpdateView):
     model = DishType
     form_class = DishTypeForm
@@ -67,6 +72,7 @@ class DishTypeUpdateView(generic.UpdateView):
     success_url = reverse_lazy("kitchen:dish-types-list")
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class DishTypeDeleteView(generic.DeleteView):
     model = DishType
     success_url = reverse_lazy("kitchen:dish-types-list")
@@ -96,6 +102,7 @@ class DishDetailView(generic.DetailView):
     model = Dish
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class DishCreateView(generic.CreateView):
     model = Dish
     form_class = DishForm
@@ -103,6 +110,7 @@ class DishCreateView(generic.CreateView):
     success_url = reverse_lazy("kitchen:dishes-list")
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class DishUpdateView(generic.UpdateView):
     model = Dish
     form_class = DishForm
@@ -110,6 +118,7 @@ class DishUpdateView(generic.UpdateView):
     success_url = reverse_lazy("kitchen:dishes-list")
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class DishDeleteView(generic.DeleteView):
     model = Dish
     success_url = reverse_lazy("kitchen:dishes-list")

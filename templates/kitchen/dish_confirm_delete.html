@@ -9,11 +9,11 @@
                     <h2 class="text-center">Confirm Delete</h2>
                 </div>
                 <div class="card-body">
-                    <p>Are you sure you want to delete the dish type "{{ dishtype.name }}"?</p>
+                    <p>Are you sure you want to delete the dish type "{{ dish.name }}"?</p>
                     <form method="post">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger">Yes, delete</button>
-                        <a href="{% url 'kitchen:dish-type-detail' pk=dishtype.id %}" class="btn btn-secondary">Cancel</a>
+                        <a href="{% url 'kitchen:dish-type-detail' pk=dish.id %}" class="btn btn-secondary">Cancel</a>
                     </form>
                 </div>
             </div>

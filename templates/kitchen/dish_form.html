@@ -8,7 +8,7 @@
       <div class="col-md-6">
         <div class="card shadow">
           <div class="card-body">
-            <h2 class="card-title text-center mb-4">{{ object|yesno:"Update,Create" }} a Dish Type</h2>
+            <h2 class="card-title text-center mb-4">{{ object|yesno:"Update,Create" }} a Dish</h2>
             <form method="post" action="">
               {% csrf_token %}
               {{ form|crispy }}

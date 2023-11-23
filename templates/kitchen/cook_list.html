@@ -1,4 +1,3 @@
-
 <!-- your_app/templates/your_app/cook_list.html -->
 {% extends "layouts/base-presentation.html" %}
 {% load crispy_forms_filters %}
@@ -7,12 +6,12 @@
   <div class="container mt-5 mb-5 ">
     <h2 class="mb-4" style="margin-top: 100px;">List of Cooks</h2>
     <div class="row row-cols-1 row-cols-md-3 g-4">
-    <form action="" method="get" class="input-group">
-      {{ cook_search_form|crispy }}
-      <span class="input-group-btn">
-          <button type="submit" class="btn btn-default">Search</button>
-      </span>
-    </form>
+      <form action="" method="get" class="input-group rounded-0">
+        {{ cook_search_form|crispy }}
+        <span class="input-group-btn">
+        <button type="submit" class="btn btn-default rounded-0">Search</button>
+    </span>
+      </form>
       {% for cook in cook_list %}
         <div class="col py-2">
           <div class="card h-100">
