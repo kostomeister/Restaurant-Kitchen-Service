@@ -35,6 +35,8 @@
                 </div>
               </div>
             </div>
+            {% empty %}
+        <h3>No dishes were found!</h3>
           {% endfor %}
           {% if dish_list|length > 5 %}
             <div class="col-12 text-center mt-3">
