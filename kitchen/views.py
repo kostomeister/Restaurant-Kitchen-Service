@@ -69,7 +69,9 @@ class DishTypeUpdateView(generic.UpdateView):
     model = DishType
     form_class = DishTypeForm
     template_name = "kitchen/dish_type_form.html"
-    success_url = reverse_lazy("kitchen:dish-types-list")
+
+    def get_success_url(self):
+        return reverse_lazy("kitchen:dish-detail", kwargs={'pk': self.object.pk})
 
 
 @method_decorator(staff_member_required, name='dispatch')
