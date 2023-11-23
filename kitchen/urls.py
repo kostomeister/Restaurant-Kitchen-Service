@@ -17,15 +17,23 @@ from kitchen.views import (
     register_view,
     CookCreateView,
     CookUpdateView,
-    CookDeleteView
+    CookDeleteView,
 )
 
 urlpatterns = [
     path("", index, name="index"),
     path("dish-types/", DishTypeListView.as_view(), name="dish-types-list"),
     path("dish-types/<int:pk>/", dish_type_detail_view, name="dish-type-detail"),
-    path("dish-types/<int:pk>/update/", DishTypeUpdateView.as_view(), name="dish-type-update"),
-    path("dish-types/<int:pk>/delete/", DishTypeDeleteView.as_view(), name="dish-type-delete"),
+    path(
+        "dish-types/<int:pk>/update/",
+        DishTypeUpdateView.as_view(),
+        name="dish-type-update",
+    ),
+    path(
+        "dish-types/<int:pk>/delete/",
+        DishTypeDeleteView.as_view(),
+        name="dish-type-delete",
+    ),
     path("dish-types/create/", DishTypeCreateView.as_view(), name="dish-type-create"),
     path("dishes/", DishListView.as_view(), name="dishes-list"),
     path("dishes/сreate/", DishCreateView.as_view(), name="dish-create"),
@@ -37,7 +45,7 @@ urlpatterns = [
     path("cooks/<int:pk>/update/", CookUpdateView.as_view(), name="cooks-update"),
     path("cooks/<int:pk>/delete/", CookDeleteView.as_view(), name="cooks-delete"),
     path("cooks/create/", CookCreateView.as_view(), name="cooks-create"),
-    path("register/", register_view, name='register')
+    path("register/", register_view, name="register"),
 ]
 
 app_name = "kitchen"

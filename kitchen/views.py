@@ -17,7 +17,7 @@ from kitchen.forms import (
     CookSearchForm,
     RegistrationForm,
     CookForm,
-    CookUpdateForm
+    CookUpdateForm,
 )
 from kitchen.models import Dish, DishType
 
@@ -29,7 +29,7 @@ def index(request: HttpRequest) -> HttpResponse:
     context = {
         "count_dishes": count_dishes,
         "count_cooks": count_cooks,
-        "count_dish_types": count_dish_types
+        "count_dish_types": count_dish_types,
     }
     return render(request, "kitchen/index.html", context)
 
@@ -59,14 +59,14 @@ def dish_type_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
     dishes = dish_type.dish_set.all()
 
     context = {
-        'dish_type': dish_type,
-        'dishes': dishes,
+        "dish_type": dish_type,
+        "dishes": dishes,
     }
 
-    return render(request, 'kitchen/dish_type_detail.html', context)
+    return render(request, "kitchen/dish_type_detail.html", context)
 
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(staff_member_required, name="dispatch")
 class DishTypeCreateView(generic.CreateView):
     model = DishType
     form_class = DishTypeForm
@@ -74,17 +74,17 @@ class DishTypeCreateView(generic.CreateView):
     success_url = reverse_lazy("kitchen:dish-types-list")
 
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(staff_member_required, name="dispatch")
 class DishTypeUpdateView(generic.UpdateView):
     model = DishType
     form_class = DishTypeForm
     template_name = "kitchen/dish_type_form.html"
 
     def get_success_url(self):
-        return reverse_lazy("kitchen:dish-detail", kwargs={'pk': self.object.pk})
+        return reverse_lazy("kitchen:dish-detail", kwargs={"pk": self.object.pk})
 
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(staff_member_required, name="dispatch")
 class DishTypeDeleteView(generic.DeleteView):
     model = DishType
     success_url = reverse_lazy("kitchen:dish-types-list")
@@ -114,7 +114,7 @@ class DishDetailView(generic.DetailView):
     model = Dish
 
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(staff_member_required, name="dispatch")
 class DishCreateView(generic.CreateView):
     model = Dish
     form_class = DishForm
@@ -122,17 +122,17 @@ class DishCreateView(generic.CreateView):
     success_url = reverse_lazy("kitchen:dishes-list")
 
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(staff_member_required, name="dispatch")
 class DishUpdateView(generic.UpdateView):
     model = Dish
     form_class = DishForm
     template_name = "kitchen/dish_form.html"
 
     def get_success_url(self):
-        return reverse_lazy("kitchen:dish-detail", kwargs={'pk': self.object.pk})
+        return reverse_lazy("kitchen:dish-detail", kwargs={"pk": self.object.pk})
 
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(staff_member_required, name="dispatch")
 class DishDeleteView(generic.DeleteView):
     model = Dish
     success_url = reverse_lazy("kitchen:dishes-list")
@@ -145,17 +145,19 @@ class CookListView(generic.ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CookListView, self).get_context_data(**kwargs)
         cook_name = self.request.GET.get("cook_name", "")
-        context["cook_search_form"] = CookSearchForm(
-            initial={"cook_name": cook_name}
-        )
+        context["cook_search_form"] = CookSearchForm(initial={"cook_name": cook_name})
         return context
 
     def get_queryset(self):
         cook_name = self.request.GET.get("cook_name")
-        queryset = get_user_model().objects.filter(is_staff=True)
+        queryset = get_user_model().objects.filter(
+            Q(is_staff=True) & ~Q(is_superuser=True)
+        )
         if cook_name:
             queryset = queryset.filter(
-                Q(first_name__icontains=cook_name) | Q(last_name__icontains=cook_name) | Q(username__icontains=cook_name)
+                Q(first_name__icontains=cook_name)
+                | Q(last_name__icontains=cook_name)
+                | Q(username__icontains=cook_name)
             )
         return queryset
 
@@ -177,7 +179,7 @@ class CookUpdateView(SuperUserCheckMixin, generic.UpdateView):
     template_name = "kitchen/cook_form.html"
 
     def get_success_url(self):
-        return reverse_lazy("kitchen:cooks-detail", kwargs={'pk': self.object.pk})
+        return reverse_lazy("kitchen:cooks-detail", kwargs={"pk": self.object.pk})
 
 
 class CookDeleteView(SuperUserCheckMixin, generic.DeleteView):
@@ -186,13 +188,13 @@ class CookDeleteView(SuperUserCheckMixin, generic.DeleteView):
 
 
 def register_view(request: HttpRequest) -> HttpResponse:
-    if request.method == 'POST':
+    if request.method == "POST":
         form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('/')
+            return redirect("/")
     else:
         form = RegistrationForm()
 
-    return render(request, 'registration/register.html', {'form': form})
+    return render(request, "registration/register.html", {"form": form})

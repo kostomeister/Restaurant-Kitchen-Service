@@ -16,19 +16,19 @@ Go to the project directory
 ### Create virtual env
 
 On windows
-```bash
+```
   python -m venv venv
   venv\Scripts\activate
 ```
-On MacOS
-```bash
+On macOS
+```
   python3 -m venv my_env
   source my_env/bin/activate
 ```
 
 Install dependencies
 
-```bash
+```
   pip install -r requirements.txt
 ```
 
@@ -36,14 +36,14 @@ Install dependencies
 
 Make migrations and migrate
 
-```bash
+```
   python manage.py makemigrations
   python manage.py migrate
 ```
 
 Load data from fixture
 
-```bash
+```
   python manage.py loaddata data.json
 ```
 
@@ -54,7 +54,7 @@ password: mysuperdjangoproject
 ```
 
 ### Run server
-Finally you can ran server with
+Finally, you can run server with
 ```
 python manage.py runserver
 ```

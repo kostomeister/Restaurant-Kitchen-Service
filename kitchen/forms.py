@@ -8,7 +8,7 @@ from .models import DishType, Dish
 class DishTypeForm(forms.ModelForm):
     class Meta:
         model = DishType
-        fields = ['name']
+        fields = ["name"]
 
 
 class DishForm(forms.ModelForm):
@@ -29,7 +29,7 @@ class CookForm(UserCreationForm):
             "first_name",
             "last_name",
             "years_of_experience",
-            "is_staff"
+            "is_staff",
         )
 
 
@@ -37,7 +37,7 @@ class DishTypeSearchForm(forms.Form):
     dish_type = forms.CharField(
         widget=forms.TextInput(attrs={"placeholder": "Search by Dish Type"}),
         label="",
-        required=False
+        required=False,
     )
 
 
@@ -45,7 +45,7 @@ class DishSearchForm(forms.Form):
     dish_name = forms.CharField(
         widget=forms.TextInput(attrs={"placeholder": "Search Dish by name"}),
         label="",
-        required=False
+        required=False,
     )
 
 
@@ -53,7 +53,7 @@ class CookSearchForm(forms.Form):
     cook_name = forms.CharField(
         widget=forms.TextInput(attrs={"placeholder": "Search Cook by name"}),
         label="",
-        required=False
+        required=False,
     )
 
 
@@ -62,15 +62,17 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = get_user_model()
-        fields = ['username',
-                  'first_name',
-                  'last_name',
-                  'email',
-                  'password1',
-                  'password2']
+        fields = [
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "password1",
+            "password2",
+        ]
 
 
 class CookUpdateForm(UserChangeForm):
     class Meta:
         model = get_user_model()
-        fields = ('username', 'first_name', 'last_name', 'email', 'years_of_experience')
+        fields = ("username", "first_name", "last_name", "email", "years_of_experience")
