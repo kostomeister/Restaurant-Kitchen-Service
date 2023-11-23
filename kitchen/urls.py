@@ -10,7 +10,7 @@ from kitchen.views import (
     CookDetailView,
     DishTypeCreateView,
     DishTypeUpdateView,
-    DishTypeDeleteView, DishCreateView, DishUpdateView, DishDeleteView
+    DishTypeDeleteView, DishCreateView, DishUpdateView, DishDeleteView, register_view
 )
 
 urlpatterns = [
@@ -26,7 +26,8 @@ urlpatterns = [
     path("dishes/<int:pk>/update/", DishUpdateView.as_view(), name="dish-update"),
     path("dishes/<int:pk>/delete/", DishDeleteView.as_view(), name="dish-delete"),
     path("cooks/", CookListView.as_view(), name="cooks-list"),
-    path("cooks/<int:pk>/", CookDetailView.as_view(), name="cooks-detail")
+    path("cooks/<int:pk>/", CookDetailView.as_view(), name="cooks-detail"),
+    path("register/", register_view, name='register')
 ]
 
 app_name = "kitchen"

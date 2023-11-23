@@ -1,14 +1,14 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, login
 from django.db.models import Q
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.decorators import method_decorator
 
 
-from kitchen.forms import DishTypeForm, DishForm, DishTypeSearchForm, DishSearchForm, CookSearchForm
+from kitchen.forms import DishTypeForm, DishForm, DishTypeSearchForm, DishSearchForm, CookSearchForm, RegistrationForm
 from kitchen.models import Dish, DishType
 
 
@@ -68,7 +68,7 @@ class DishTypeCreateView(generic.CreateView):
 class DishTypeUpdateView(generic.UpdateView):
     model = DishType
     form_class = DishTypeForm
-    template_name = "kitchen/dish_form.html"
+    template_name = "kitchen/dish_type_form.html"
     success_url = reverse_lazy("kitchen:dish-types-list")
 
 
@@ -127,7 +127,6 @@ class DishDeleteView(generic.DeleteView):
 class CookListView(generic.ListView):
     model = get_user_model()
     paginate_by = 3
-    queryset = get_user_model().objects.filter(is_staff=True)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CookListView, self).get_context_data(**kwargs)
@@ -139,7 +138,7 @@ class CookListView(generic.ListView):
 
     def get_queryset(self):
         cook_name = self.request.GET.get("cook_name")
-        queryset = get_user_model().objects.all()
+        queryset = get_user_model().objects.filter(is_staff=True)
         if cook_name:
             queryset = queryset.filter(
                 Q(first_name__icontains=cook_name) | Q(last_name__icontains=cook_name) | Q(username__icontains=cook_name)
@@ -149,3 +148,16 @@ class CookListView(generic.ListView):
 
 class CookDetailView(generic.DetailView):
     model = get_user_model()
+
+
+def register_view(request: HttpRequest) -> HttpResponse:
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('/')
+    else:
+        form = RegistrationForm()
+
+    return render(request, 'registration/register.html', {'form': form})
