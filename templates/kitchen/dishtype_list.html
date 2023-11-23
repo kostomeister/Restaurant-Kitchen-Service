@@ -26,6 +26,8 @@
                 <ul>
                   {% for dish in dish_type.dish_set.all|slice:":5" %}
                     <li>{{ dish.name }}</li>
+                    {% empty %}
+                    <h7>No dishes in this dish type yet</h7>
                   {% endfor %}
                   {% if dish_type.dish_set.count > 5 %}
                     <li>...</li>
