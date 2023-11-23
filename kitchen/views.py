@@ -10,7 +10,7 @@ from django.utils.decorators import method_decorator
 from .mixins.is_superuser import SuperUserCheckMixin
 
 from kitchen.forms import DishTypeForm, DishForm, DishTypeSearchForm, DishSearchForm, CookSearchForm, RegistrationForm, \
-    CookForm
+    CookForm, CookUpdateForm
 from kitchen.models import Dish, DishType
 
 
@@ -160,6 +160,20 @@ class CookCreateView(SuperUserCheckMixin, generic.CreateView):
     model = get_user_model()
     form_class = CookForm
     template_name = "kitchen/cook_form.html"
+    success_url = reverse_lazy("kitchen:cooks-list")
+
+
+class CookUpdateView(SuperUserCheckMixin, generic.UpdateView):
+    model = get_user_model()
+    form_class = CookUpdateForm
+    template_name = "kitchen/cook_form.html"
+
+    def get_success_url(self):
+        return reverse_lazy("kitchen:cooks-detail", kwargs={'pk': self.object.pk})
+
+
+class CookDeleteView(SuperUserCheckMixin, generic.DeleteView):
+    model = get_user_model()
     success_url = reverse_lazy("kitchen:cooks-list")
 
 

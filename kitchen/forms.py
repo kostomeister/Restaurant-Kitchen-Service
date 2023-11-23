@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from .models import DishType, Dish
 
@@ -68,3 +68,9 @@ class RegistrationForm(UserCreationForm):
                   'email',
                   'password1',
                   'password2']
+
+
+class CookUpdateForm(UserChangeForm):
+    class Meta:
+        model = get_user_model()
+        fields = ('username', 'first_name', 'last_name', 'email', 'years_of_experience')
