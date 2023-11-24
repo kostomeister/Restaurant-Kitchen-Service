@@ -68,6 +68,17 @@ But only admins can do those operations with Cooks
 
 
 ## Let me walk you through the main pages of the website
+Link
+```
+https://kitchen-service-k661.onrender.com
+```
+    
+Credentials to Log in:
+```
+username: user
+password: user12345
+``` 
+    
 ### Main page
 ![img.png](static%2Fassets%2Fimg%2Fimg.png)
 
