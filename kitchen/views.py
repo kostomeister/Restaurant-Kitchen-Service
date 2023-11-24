@@ -24,7 +24,9 @@ from kitchen.models import Dish, DishType
 
 def index(request: HttpRequest) -> HttpResponse:
     count_dishes = Dish.objects.count()
-    count_cooks = get_user_model().objects.count()
+    count_cooks = queryset = get_user_model().objects.filter(
+            Q(is_staff=True) & ~Q(is_superuser=True)
+        ).count()
     count_dish_types = DishType.objects.count()
     context = {
         "count_dishes": count_dishes,
