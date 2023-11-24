@@ -7,7 +7,7 @@
       <h2>List of Cooks</h2>
       {% if user.is_admin %}
       <a href="{% url 'kitchen:cooks-create' %}" class="btn btn-primary">ADD NEW</a>
-      {% endblock %}
+      {% endif %}
     </div>
     <div class="row row-cols-1 row-cols-md-3 g-4">
       <form action="" method="get" class="input-group rounded-0">
