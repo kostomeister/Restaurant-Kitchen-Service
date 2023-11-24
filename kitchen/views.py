@@ -58,7 +58,7 @@ class DishTypeListView(generic.ListView):
 
 def dish_type_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
     dish_type = get_object_or_404(DishType, pk=pk)
-    dishes = dish_type.dish_set.all()
+    dishes = dish_type.dishes.all()
 
     context = {
         "dish_type": dish_type,
