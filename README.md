@@ -75,8 +75,8 @@ https://kitchen-service-k661.onrender.com
     
 Credentials to Log in:
 ```
-username: user
-password: user12345
+username: supersecretuser
+password: mysuperdjangoproject
 ``` 
     
 ### Main page
