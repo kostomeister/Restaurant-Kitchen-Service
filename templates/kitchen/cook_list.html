@@ -1,0 +1,47 @@
+{% extends "layouts/base-presentation.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <div class="container mt-5 mb-5 ">
+    <div class="d-flex justify-content-between align-items-center mb-3" style="padding-top: 100px">
+      <h2>List of Cooks</h2>
+      {% if user.is_superuser %}
+        <a href="{% url 'kitchen:cooks-create' %}" class="btn btn-primary">ADD NEW</a>
+      {% endif %}
+    </div>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <form action="" method="get" class="input-group rounded-0">
+        {{ cook_search_form|crispy }}
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-default rounded-0">Search</button>
+        </span>
+      </form>
+      {% for cook in cook_list %}
+        <div class="col py-2">
+          <div class="card h-100">
+            <div class="card-body">
+              <a href="{% url 'kitchen:cooks-detail' pk=cook.id %}">
+                <h5 class="card-title">{{ cook.first_name }} {{ cook.last_name }}</h5>
+                <p class="card-text">Years of Experience: {{ cook.years_of_experience }}</p>
+                <h6 class="card-subtitle mb-2 text-muted">Dishes Participated:</h6>
+                <ul>
+                  {% for dish in cook.dishes.all|slice:":5" %}
+                    <li>{{ dish.name }}</li>
+                  {% endfor %}
+                  {% if cook.dishes.count > 5 %}
+                    <li>...</li>
+                  {% endif %}
+                  {% if not cook.dishes.all %}
+                    <li>This cook hasn't participated in any dishes yet.</li>
+                  {% endif %}
+                </ul>
+              </a>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <h3>No cooks were found!</h3>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock content %}
