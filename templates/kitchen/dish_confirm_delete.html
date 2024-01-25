@@ -1,0 +1,23 @@
+{% extends "layouts/base-presentation.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card" style="margin-top: 100px;">
+                <div class="card-header">
+                    <h2 class="text-center">Confirm Delete</h2>
+                </div>
+                <div class="card-body">
+                    <p>Are you sure you want to delete the dish type "{{ dish.name }}"?</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Yes, delete</button>
+                        <a href="{% url 'kitchen:dish-type-detail' pk=dish.id %}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

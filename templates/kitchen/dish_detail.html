@@ -1,0 +1,39 @@
+{% extends "layouts/base-presentation.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="card" style="margin-top: 100px;">
+          <div class="card-header d-flex justify-content-between align-items-center">
+              <h2 class="text-center">About {{ dish.name }}</h2>
+              <div class="d-flex">
+                {% if user.is_staff %}
+                <a href="{% url 'kitchen:dish-update' pk=dish.id %}" class="btn btn-primary" style="margin-right: 0.5rem;">Update</a>
+                {% endif %}
+                {% if user.is_staff %}
+                <a href="{% url 'kitchen:dish-delete' pk=dish.id%}" class="btn btn-danger">Delete</a>
+                {% endif %}
+              </div>
+            </div>
+
+          <div class="card-body">
+            <p>{{ dish.description }}</p>
+            <p><strong>Price:</strong> ${{ dish.price }}</p>
+            <p>Type: {{ dish.dish_type.name }}</p>
+            <div class="cooks-list">
+              <p><strong>Cooks:</strong></p>
+              <ul>
+                {% for cook in dish.cooks.all %}
+                  <li><a href="{% url 'kitchen:cooks-detail' pk=cook.id %}">
+                    {{ cook.first_name }} {{ cook.last_name }}
+                  </a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

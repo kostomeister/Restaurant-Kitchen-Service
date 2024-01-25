@@ -1,0 +1,45 @@
+{% extends "layouts/base-presentation.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+  <div class="container mt-5 mb-5" style="padding-top: 100px">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1>Our dish types</h1>
+
+      {% if user.is_staff %}
+        <a href="{% url 'kitchen:dish-type-create' %}" class="btn btn-primary">Add new</a>
+      {% endif %}
+    </div>
+    <form action="" method="get" class="input-group">
+      {{ dish_type_search_form|crispy }}
+      <span class="input-group-btn">
+          <button type="submit" class="btn btn-default">Search</button>
+      </span>
+    </form>
+    <div class="row row-cols-md-3 g-4">
+      {% for dish_type in dishtype_list %}
+        <div class="col py-2">
+          <div class="card h-100">
+            <div class="card-body">
+              <a href="{% url 'kitchen:dish-type-detail' pk=dish_type.id %}">
+                <h4 class="card-title">{{ dish_type.name }}</h4>
+                <ul>
+                  {% for dish in dish_type.dish_set.all|slice:":5" %}
+                    <li>{{ dish.name }}</li>
+                    {% empty %}
+                    <h7>No dishes in this dish type yet</h7>
+                  {% endfor %}
+                  {% if dish_type.dish_set.count > 5 %}
+                    <li>...</li>
+                  {% endif %}
+                </ul>
+              </a>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <h3>No dish types were found!</h3>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock content %}
